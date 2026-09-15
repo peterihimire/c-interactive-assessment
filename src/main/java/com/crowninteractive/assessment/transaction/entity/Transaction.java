@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="transactions",
+@Table(
+    name="transactions",
     indexes = {
         @Index(
             name = "idx_transactions_transaction_date",
@@ -24,6 +25,18 @@ import java.time.LocalDateTime;
         @Index(
             name = "idx_transactions_account_date",
             columnList = "account_number, transaction_date"
+        ),
+        @Index(
+            name = "idx_transactions_channel",
+            columnList = "channel"
+        ),
+        @Index(
+            name = "idx_transactions_currency",
+            columnList = "currency"
+        ),
+        @Index(
+            name = "idx_transactions_status",
+            columnList = "status"
         )
     })
 public class Transaction extends BaseEntity {
