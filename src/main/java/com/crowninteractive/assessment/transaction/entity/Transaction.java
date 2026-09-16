@@ -74,14 +74,3 @@ public class Transaction extends BaseEntity {
   @Column(nullable = false)
   private TransactionSource source;
 }
-
-//  #- id
-//#- transactionReference
-//#- accountNumber
-//#- transactionType
-//#- channel
-//#- amount
-//#- currency
-//#- status
-//#- transactionDate
-//#- source

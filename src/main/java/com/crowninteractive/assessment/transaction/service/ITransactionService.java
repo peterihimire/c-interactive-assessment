@@ -25,5 +25,4 @@ public interface ITransactionService {
       TransactionStatus status,
       Pageable pageable
   );
-
 }
