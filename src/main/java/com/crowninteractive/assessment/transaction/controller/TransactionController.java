@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -72,19 +74,29 @@ public class TransactionController {
       @RequestParam(defaultValue = "10") int limit,
       @RequestParam(required = false) String accountNumber,
       @RequestParam(required = false) TransactionChannel channel,
-      @RequestParam(required = false) Instant fromDate,
-      @RequestParam(required = false) Instant toDate,
+      @RequestParam(required = false) LocalDate fromDate,
+      @RequestParam(required = false) LocalDate toDate,
       @RequestParam(required = false) CurrencyCode currency,
       @RequestParam(required = false) TransactionStatus status
   ) {
 
     Pageable pageable = PageRequest.of(page - 1, limit);
+    Instant fromDateTime = fromDate != null
+        ? fromDate.atStartOfDay(ZoneOffset.UTC).toInstant()
+        : null;
+
+    Instant toDateTime = toDate != null
+        ? toDate.plusDays(1)
+          .atStartOfDay(ZoneOffset.UTC)
+          .toInstant()
+        : null;
+
     Page<TransactionResponseDto> transactionPage =
         transactionService.getAllTransactions(
             accountNumber,
             channel,
-            fromDate,
-            toDate,
+            fromDateTime,
+            toDateTime,
             currency,
             status,
             pageable

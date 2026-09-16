@@ -52,7 +52,7 @@ public class TransactionSpecification {
       Instant toDate
   ) {
     return (root, query, cb) ->
-        cb.lessThanOrEqualTo(
+        cb.lessThan(
             root.get("transactionDate"),
             toDate
         );

@@ -59,3 +59,9 @@ Default API base URL:
 
 ```text
 http://localhost:8080/api/v1/
+```
+
+Postman published documentation of the endpoints
+```text
+https://documenter.getpostman.com/view/12340633/2sBYB1M7dK
+```
