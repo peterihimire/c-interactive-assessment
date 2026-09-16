@@ -136,24 +136,95 @@ The application will be available at:
 http://localhost:8040/api/v1/
 ```
 
+## API Documention
 
+Postman published documentation of the endpoints [Link](https://documenter.getpostman.com/view/12340633/2sBYB1M7dK)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Postman published documentation of the endpoints
-```text
-https://documenter.getpostman.com/view/12340633/2sBYB1M7dK
+## API Endpoints
+**Create Transaction**
+```http
+POST /transactions
 ```
+Example Request:
+
+```JSON
+{
+  "transactionReference": "TXN-20260915-000001",
+  "accountNumber": "0123456789",
+  "transactionType": "CREDIT",
+  "channel": "TRANSFER",
+  "amount": 150000.00,
+  "currency": "NGN",
+  "status": "SUCCESS",
+  "transactionDate": "2026-09-15T12:30:00Z",
+  "source": "BANK"
+}
+```
+
+**Get Transaction**
+```http
+GET /transactions/{slug}
+```
+Example:
+
+```http
+GET /transactions/01k5exampletransaction
+```
+
+**Get Transactions**
+```http
+GET /transactions
+```
+Default Pagination:
+
+```http
+GET /transactions?page=1&limit=10
+```
+
+## Filter Transactions
+The transaction listing endpoint supports optional filters.
+
+- **Filter by Account Number**
+
+```http
+GET /transactions?accountNumber=0123456789
+```
+- **Filter by Channel**
+
+```http
+GET /transactions?channel=POS
+```
+
+- **Combine Multiple Filters**
+
+Multiple filters can be combined with pagination:
+```http
+GET /transactions?page=1&limit=10&accountNumber=0123456789&channel=POS&currency=NGN&status=SUCCESS
+```
+## Design Decisions
+**Layered Architecture**
+The application follows a layered architecture:
+```text
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+PostgreSQL
+```
+
+A separate specification layer is used for dynamic transaction filtering:
+```text
+Controller
+    ↓
+Service
+    ↓
+Specification
+    ↓
+Repository
+    ↓
+PostgreSQL
+```
+
+## DTOs
